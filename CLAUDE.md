@@ -35,6 +35,13 @@ You can inspect the last few lines of the build log file to check for errors:
 tail -n 20 build.log
 ```
 
+### Development Servers
+- `pnpm dev` - Start all development servers (backend + frontend)
+- `pnpm dev:be` - Start backend development servers only
+- `pnpm dev:fe` - Start frontend development servers only
+- `pnpm dev:ai` - Start AI/LangChain development workflow
+- `pnpm start` - Start production build locally
+
 ### Testing
 - `pnpm test` - Run all tests
 - `pnpm test:affected` - Runs tests based on what has changed since the last
@@ -50,7 +57,10 @@ your current directory.
 
 ### Code Quality
 - `pnpm lint` - Lint code
+- `pnpm lint:fix` - Auto-fix linting issues
 - `pnpm typecheck` - Run type checks
+- `pnpm format` - Format code using Biome and Prettier
+- `pnpm format:check` - Check code formatting without making changes
 
 Always run lint and typecheck before committing code to ensure quality.
 Execute these commands from within the specific package directory you're
@@ -58,6 +68,12 @@ working on (e.g., `cd packages/cli && pnpm lint`). Run the full repository
 check only when preparing the final PR. When your changes affect type
 definitions, interfaces in `@n8n/api-types`, or cross-package dependencies,
 build the system before running lint and typecheck.
+
+**Git Hooks**: The codebase uses lefthook for pre-commit hooks that automatically run:
+- Biome for JS/TS formatting and linting
+- Prettier for Vue/YAML/MD/CSS formatting
+- Style linting for SCSS/SASS/Vue files
+- Actionlint for GitHub workflow validation
 
 ## Architecture Overview
 
@@ -149,11 +165,24 @@ When implementing features:
 5. Write tests with proper mocks
 6. Run `pnpm typecheck` to verify types
 
-## Github Guidelines
+## Development Workflow
+
+### Creating Branches and PRs
+- Create branches from fresh master using Linear ticket naming
+- Use the branch name suggested by Linear for consistency
+
+### Github Guidelines
 - When creating a PR, use the conventions in
   `.github/pull_request_template.md` and
   `.github/pull_request_title_conventions.md`.
 - Use `gh pr create --draft` to create draft PRs.
 - Always reference the Linear ticket in the PR description,
   use `https://linear.app/n8n/issue/[TICKET-ID]`
-- always link to the github issue if mentioned in the linear ticket.
+- Always link to the github issue if mentioned in the linear ticket.
+
+### PR Title Format
+Follow Angular commit convention: `<type>(<scope>): <summary>`
+- **Types**: feat, fix, perf, test, docs, refactor, build, ci, chore
+- **Scopes**: API, benchmark, core, editor, or specific node names
+- **Summary**: Imperative present tense, capitalized, no period
+- Add `(no-changelog)` suffix for changes that shouldn't appear in changelog

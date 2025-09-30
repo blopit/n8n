@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm dev:*)",
+      "Bash(pnpm install:*)",
+      "Bash(pnpm start:*)",
+      "Bash(npx:*)",
+      "Bash(./n8n user:reset:*)",
+      "Bash(./n8n --help)",
+      "Bash(./n8n user-management:reset --help)",
+      "Bash(./packages/cli/bin/n8n user-management:reset:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
